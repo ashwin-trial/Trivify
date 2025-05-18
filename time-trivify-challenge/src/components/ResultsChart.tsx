@@ -11,7 +11,7 @@ const ResultsChart: React.FC<ResultsChartProps> = ({ answers }) => {
   const totalQuestions = answers.length;
   const correctAnswers = answers.filter(a => a.isCorrect).length;
   const skippedAnswers = answers.filter(a => a.selectedAnswer === null).length;
-  const incorrectAnswers = answers.filter(a => !a.isCorrect && a.selectedAnswer !== null).length;
+  const incorrectAnswers = totalQuestions - correctAnswers - skippedAnswers;
   const answeredQuestions = totalQuestions - skippedAnswers;
 
   // Calculate average time for correct and incorrect answers

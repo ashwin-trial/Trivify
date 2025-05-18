@@ -102,24 +102,11 @@ export const TriviaProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const nextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(prev => prev + 1);
-    } else {
-      endGame();
     }
   };
 
   const endGame = () => {
-    // Ensure we have all answers
-    if (answers.length !== questions.length) {
-      console.warn('Missing answers, adding skipped answers for remaining questions');
-      const remainingAnswers = questions.slice(answers.length).map(question => ({
-        questionId: question.id,
-        selectedAnswer: null,
-        isCorrect: false,
-        timeSpent: question.timeLimit
-      }));
-      setAnswers(prev => [...prev, ...remainingAnswers]);
-    }
-
+    // Calculate results before adding any missing answers
     const correctAnswers = answers.filter(answer => answer.isCorrect).length;
     const totalQuestions = questions.length;
     const accuracy = (correctAnswers / totalQuestions) * 100;
